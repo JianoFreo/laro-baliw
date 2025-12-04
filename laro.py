@@ -149,4 +149,16 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # Default behavior: launch GUI so pressing Run/Play in editors opens the GUI instantly.
+    # To run the CLI instead, call: `python laro.py cli`
+    try:
+        if len(sys.argv) > 1 and sys.argv[1] == 'cli':
+            main()
+        else:
+            # import here to avoid requiring tkinter when only CLI is desired
+            from laro_gui import run_gui
+            run_gui()
+    except Exception:
+        # Fallback to CLI if GUI cannot start
+        print('GUI failed to start; falling back to CLI mode.')
+        main()
